@@ -1,3 +1,4 @@
+import time
 from config import Config
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -21,7 +22,9 @@ class Scraper:
         self.piazza = Piazza()
         self.piazza.user_login(email=Config.username, password=Config.password)
         self.course = self.piazza.network(Config.courseid)
-        self.engine = create_engine('sqlite:///test.db', echo=False)
+        print(Config.courseid)
+        assert Config.courseid.strip()
+        self.engine = create_engine(f'sqlite:///{Config.courseid}.db', echo=False)
         self.Session = sessionmaker(bind=self.engine)
         self.session = self.Session()
         self.days    = days_refresh
@@ -49,10 +52,11 @@ class Scraper:
             None
         """
 
-        for _,post in enumerate(self.course.iter_all_posts()):
+        for post in self.course.iter_all_posts():
+            time.sleep(1)
             if not self.process_one(post):
                 return
-            print(_,post['history'][0]['subject'])
+            print(post['history'][0]['subject'])
 
     def process_one(self, post):
         """
@@ -148,6 +152,8 @@ class Scraper:
 
 
 if __name__ == "__main__":
+    from models import create
+    create()
     parser = argparse.ArgumentParser(description='Scrapes Piazza posts for use in AnnPod Analysis')
     parser.add_argument('-r','--refresh',nargs='?',type=int, 
         default=2,help='The amount of time to check for new content (Typically around a week is good)')

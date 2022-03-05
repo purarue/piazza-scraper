@@ -1,8 +1,6 @@
 import os
 
-get = lambda *args: os.environ.get(*args)
-
 class Config:
-    username = get('DB_USERNAME', "")
-    password = get('DB_PASSWORD', "")
-    courseid = get('COURSEID', "")
+    username = os.environ["PIAZZA_USERNAME"]
+    password = os.environ["PIAZZA_PASSWORD"]
+    courseid = os.environ['COURSEID']

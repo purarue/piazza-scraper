@@ -2,6 +2,7 @@ from sqlalchemy import Table, Column, Integer, String, Float, ForeignKey, create
 from sqlalchemy.orm import relationship,backref
 from sqlalchemy.ext.declarative import declarative_base
 
+from config import Config
 
 Base = declarative_base()
 
@@ -126,7 +127,10 @@ class Keyword(Base):
 
 
 
-if __name__ == "__main__":
-    engine = create_engine('sqlite:///test.db', echo=False)
+def create():
+    engine = create_engine(f'sqlite:///{Config.courseid}.db', echo=False)
     Base.metadata.create_all(engine)
     print("Created Database")
+
+if __name__ == "__main__":
+    create()
