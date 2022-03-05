@@ -11,4 +11,5 @@ setup(
     package_data={pkg: ["py.typed"]},
     python_requires=">=3.8",
     install_requires=requirements,
+    entry_points={"console_scripts": ["piazza_scraper = piazza_scraper.__main__:main"]},
 )

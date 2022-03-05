@@ -42,9 +42,16 @@ class Scraper:
             print(post["history"][0]["subject"])
 
 
-@click.command()
+@click.group()
+def main() -> None:
+    "Scrape posts from Piazza"
+    pass
+
+
+@main.command(short_help="run scraper")
 @click.argument("COURSEID", type=str)
-def main(courseid: str) -> None:
+def scrape(courseid: str) -> None:
+    "Run the piazza scraper for COURSEID"
     s = Scraper(courseid)
     s.parse()
     s.write()

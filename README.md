@@ -17,5 +17,5 @@ pip install git+https://github.com/seanbreckenridge/piazza-scraper
 Set the `PIAZZA_USERNAME` and `PIAZZA_PASSWORD` environment variables
 
 ```
-python3 -m piazza_scraper courseid
+python3 -m piazza_scraper scrape courseid
 ```
