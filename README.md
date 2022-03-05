@@ -4,7 +4,7 @@ Scrapes [piazza.com](http://piazza.com).
 
 Modified to dump everything requested to JSON instead of a sqlite database
 
-Removed the updating mechanisms -- this is meant to be used once, after my class is over, to export everything from the account
+Removed the updating mechanisms -- this is meant to be used once, after my class is over, to export everything from the course
 
 # Installation
 
