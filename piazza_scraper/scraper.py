@@ -1,24 +1,19 @@
+import os
 import json
+import time
 from typing import Dict, Any
 from pathlib import Path
-import time
 
 import click
 from piazza_api import Piazza  # type: ignore[import]
 
-from .config import Config
+
+class Config:
+    username = os.environ["PIAZZA_USERNAME"]
+    password = os.environ["PIAZZA_PASSWORD"]
 
 
 class Scraper:
-    """
-    Usage for Scraper:
-
-    >>> s = Scraper() # Initializes scraper/db connection
-    >>> s.get(10) #Fetches 10 posts and stores them
-    >>> s.print_topics() # Prints list of current topics/tags
-    >>> s.print_posts() # Prints all posts in DB
-    """
-
     def __init__(self, courseid: str):
         self.piazza = Piazza()
         self.piazza.user_login(email=Config.username, password=Config.password)
@@ -32,9 +27,9 @@ class Scraper:
     def parse(self):
         self.data["stats"] = self.course.get_statistics()
         self.get_all_posts()
-        # TODO: get users for each id in posts
 
     def write(self):
+        print(f"Writing to {self.datapath}")
         self.data["posts"] = self.posts
         self.datapath.write_text(json.dumps(self.data))
 
@@ -44,7 +39,6 @@ class Scraper:
             assert "id" in post
             uid = post["id"]
             self.posts[uid] = post
-            self.write()
             print(post["history"][0]["subject"])
 
 
@@ -53,6 +47,7 @@ class Scraper:
 def main(courseid: str) -> None:
     s = Scraper(courseid)
     s.parse()
+    s.write()
 
 
 if __name__ == "__main__":

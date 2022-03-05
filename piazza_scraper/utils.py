@@ -1,6 +1,7 @@
-from datetime import datetime
 import re
 import html
+
+from datetime import datetime
 
 
 def remove_tags(text: str) -> str:
