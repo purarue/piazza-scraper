@@ -19,3 +19,9 @@ Set the `PIAZZA_USERNAME` and `PIAZZA_PASSWORD` environment variables
 ```
 python3 -m piazza_scraper scrape courseid
 ```
+
+To parse:
+
+```
+python3 -m piazza_scraper parse ./courseid.json
+```
