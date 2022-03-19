@@ -29,10 +29,10 @@ def scrape(courseid: str) -> None:
 )
 def parse(json_dump: str) -> None:
     "Parse a dumped json file"
-    import IPython
-    from .parse import parse_file
+    import IPython  # type: ignore[import]
+    from .parse import Export
 
-    res = parse_file(Path(json_dump))  # noqa
+    res = Export.parse_file(Path(json_dump))  # noqa
     IPython.embed(header=f"Use {click.style('res', fg='green')} to access visit data")
 
 
