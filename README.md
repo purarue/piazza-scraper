@@ -9,7 +9,7 @@ Removed the updating mechanisms -- this is meant to be used once, after my class
 # Installation
 
 ```
-pip install git+https://github.com/seanbreckenridge/piazza-scraper
+pip install git+https://github.com/purarue/piazza-scraper
 ```
 
 # How to Run
@@ -28,7 +28,7 @@ python3 -m piazza_scraper parse ./courseid.json
 
 ## HPI
 
-This is used in [HPI](https://github.com/seanbreckenridge/HPI) with the `my.piazza.scraper` module -- it locates, infers my user in the export and returns my posts, allowing me to summarize/query easily:
+This is used in [HPI](https://github.com/purarue/HPI) with the `my.piazza.scraper` module -- it locates, infers my user in the export and returns my posts, allowing me to summarize/query easily:
 
 ```bash
 $ hpi doctor -S my.piazza.scraper
