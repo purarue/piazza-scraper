@@ -1,3 +1,0 @@
-piazza_api
-click
-beautifulsoup4

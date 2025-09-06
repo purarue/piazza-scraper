@@ -15,7 +15,7 @@ def parse_datetime(text: str) -> datetime:
 
 
 def html_to_text(html: str) -> str:
-    return cast(str, BeautifulSoup(html, "html.parser").text)
+    return BeautifulSoup(html, "html.parser").text
 
 
 class Post:
