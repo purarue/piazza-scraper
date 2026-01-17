@@ -1,12 +1,13 @@
 import json
 from pathlib import Path
-from typing import List, Dict, Any, NamedTuple, Iterator, Optional, cast
+from typing import List, Dict, Any, NamedTuple, Optional, cast
+from collections.abc import Iterator
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
 from bs4 import BeautifulSoup  # type: ignore[import]
 
-Json = Dict[str, Any]
+Json = dict[str, Any]
 
 
 def parse_datetime(text: str) -> datetime:
@@ -19,7 +20,7 @@ def html_to_text(html: str) -> str:
 
 
 class Post:
-    def __init__(self, raw: Json, *, class_id: str, _post_nr: Optional[int] = None):
+    def __init__(self, raw: Json, *, class_id: str, _post_nr: int | None = None):
         self.raw = raw
         self.class_id = class_id
         self._post_nr = _post_nr  # uid which is incremented for post count
@@ -49,7 +50,7 @@ class Post:
     def post_nr(self) -> int:
         if self._post_nr is not None:
             return self._post_nr
-        nr: Optional[int] = self.raw.get("nr")
+        nr: int | None = self.raw.get("nr")
         if nr is not None:
             assert isinstance(nr, int), "Expected nr (post number) to be an integer"
             return nr
@@ -70,7 +71,7 @@ class Post:
 
     def walk_posts_by_me(self, user_id: str) -> Iterator["Post"]:
         for post in self.walk_posts():
-            uid: Optional[str] = None
+            uid: str | None = None
             if "uid" in post.raw:
                 uid = post.raw["uid"]
             elif "id" in post.raw:
@@ -125,12 +126,12 @@ class User(NamedTuple):
 @dataclass
 class Export:
     class_id: str
-    stats: Dict[str, Any]
-    users: List[User]
-    posts: List[Post]
+    stats: dict[str, Any]
+    users: list[User]
+    posts: list[Post]
 
     @staticmethod
-    def parse_file(pth: Path, class_id: Optional[str] = None) -> "Export":
+    def parse_file(pth: Path, class_id: str | None = None) -> "Export":
         data = json.loads(pth.read_text())
         # e.g. /somedir/k8ansk12uxq6hf.json -> k8ansk12uxq6hf
         if class_id is None:

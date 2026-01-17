@@ -18,7 +18,7 @@ class Scraper:
         self.piazza.user_login(email=Config.username, password=Config.password)
         self.course = self.piazza.network(courseid)
         self.datapath = Path(f"{courseid}.json")
-        self.data: Dict[str, Any] = {}
+        self.data: dict[str, Any] = {}
         if self.datapath.exists():
             self.data = json.loads(self.datapath.read_text())
         self.posts = self.data.get("posts", {})
